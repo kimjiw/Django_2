@@ -251,7 +251,7 @@
                             <ul class="restaurantList">
 
                                 {% for restaurant in restaurants %}
-                                {% if restaurant.category == category.id %}
+                                {% if restaurant.category == category %}
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <input name="checks" id="check{{restaurant.id}}" type="checkbox"
