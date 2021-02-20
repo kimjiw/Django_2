@@ -7,7 +7,8 @@ from .models import *
 def index(request):
     
     categories = Category.objects.all()
-    content = {'categories':categories}
+    restaurants = Restaurant.objects.all()
+    content = {'categories':categories, 'restaurant':restaurants}
     #print(content)
     return render(request, 'shareRes/index.html', content)
     #return HttpResponse("index")
@@ -19,8 +20,22 @@ def restaurantDetail (request):
 
 def restaurantCreate (request):
 
-    return render(request, 'shareRes/restaurantCreate.html')
+    categories = Category.objects.all()
+    content = {'categories':categories}
+    return render(request, 'shareRes/restaurantCreate.html', content)
     #return HttpResponse('restaurantCreate')
+
+def Create_restaurant (request):
+
+    category_id = request.POST['resCategory']
+    category = Category.objects.get(id=category_id)
+    name = request.POST['resTitle']
+    link = request.POST['resLink']
+    content = request.POST['resContent']
+    keyword = request.POST['resLoc']
+    new_res = Restaurant(category=category, restaurant_name=name, restaurant_link=link, restaurant_content=content, restaurant_keyword=keyword)
+    new_res.save()
+    return HttpResponseRedirect(reverse('index'))
 
 def categoryCreate (request):
 
