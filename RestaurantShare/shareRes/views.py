@@ -29,14 +29,14 @@ def restaurantUpdate (request, res_id):
 
 def Update_restaurant (request):
 
-    resId = request.POST['resId']
+    res_id = request.POST['resId']
     change_category_id = request.POST['resCategory']
     change_category = Category.objects.get(id = change_category_id)
     change_name = request.POST['resTitle']
     change_link = request.POST['resLink']
     change_content = request.POST['resContent']
     change_keyword = request.POST['resLoc']
-    before_restaurant = Restaurant.objects.get(id = resId)
+    before_restaurant = Restaurant.objects.get(id = res_id)
     before_restaurant.category = change_category
     before_restaurant.restaurant_name = change_name
     before_restaurant.restaurant_link = change_link
@@ -44,6 +44,13 @@ def Update_restaurant (request):
     before_restaurant.restaurant_keyword = change_keyword
     before_restaurant.save()
     return HttpResponseRedirect(reverse('resDetailPage', kwargs={'res_id':resId}))
+
+def Delete_restaurant (request):
+
+    res_id = request.POST['resId']
+    restaurant = Restaurant.objects.get(id=res_id)
+    restaurant.delete()
+    return HttpResponseRedirect(reverse('index'))
 
 def restaurantCreate (request):
 
